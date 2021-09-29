@@ -9,6 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.inu.Room2.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 class MainActivity : AppCompatActivity() {
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     val binding by lazy { ActivityMainBinding.inflate(layoutInflater)}
 
     var helper: RoomHelper? = null
+    val memoAdapter = RecyclerAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,25 +28,28 @@ class MainActivity : AppCompatActivity() {
             .allowMainThreadQueries() // 공부할 때만 쓴다
             .build()
 
-        val adapter = RecyclerAdapter()
 
-        adapter.helper = helper
 
-        adapter.listData.addAll(helper?.roomMemoDao()?.getAll() ?: listOf())
+        memoAdapter.helper = helper
 
-        binding.recyclerMemo.adapter = adapter
-        binding.recyclerMemo.layoutManager = LinearLayoutManager(this)
+        memoAdapter.listData.addAll(helper?.roomMemoDao()?.getAll() ?: listOf())
 
-        binding.buttonSave.setOnClickListener {
-            if (binding.editMemo.text.toString().isNotEmpty()) {
-                val memo = RoomMemo(binding.editMemo.text.toString(), System.currentTimeMillis())
-                helper?.roomMemoDao()?.insert(memo)
+        with(binding) {
+            recyclerMemo.adapter = memoAdapter
+            recyclerMemo.layoutManager = LinearLayoutManager(this@MainActivity)
 
-                adapter.listData.clear()
+            buttonSave.setOnClickListener {
+                if (editMemo.text.toString().isNotEmpty()) {
+                    val memo = RoomMemo(binding.editMemo.text.toString(), System.currentTimeMillis())
+                    helper?.roomMemoDao()?.insert(memo)
+                    memoAdapter.listData.clear()
 
-                adapter.listData.addAll(helper?.roomMemoDao()?.getAll() ?: listOf())
-                adapter.notifyDataSetChanged()
-                binding.editMemo.setText("")
+                    memoAdapter.listData.addAll(helper?.roomMemoDao()?.getAll() ?: listOf())
+
+
+                    memoAdapter.notifyDataSetChanged()
+                    editMemo.setText("")
+                }
             }
         }
     }
