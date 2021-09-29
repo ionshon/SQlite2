@@ -1,16 +1,14 @@
-package com.inu.sqlite2
+package com.inu.Room2
 
 import java.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.inu.sqlite2.Memo
-import com.inu.sqlite2.SqliteHelper
-import com.inu.sqlite2.databinding.ItemRecyclerBinding
+import com.inu.Room2.databinding.ItemRecyclerBinding
 
 class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.Holder>() {
-    var helper: SqliteHelper? = null
-    var listData = mutableListOf<Memo>()
+    var helper: RoomHelper? = null
+    var listData = mutableListOf<RoomMemo>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemRecyclerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Holder(binding)
@@ -21,26 +19,28 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.Holder>() {
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val memo = listData.get(position)
-        holder.setMemo(memo)
+        holder.setRoomMemo(memo)
     }
 
+    // 아답터에서 제일 먼저 만든다
     inner class Holder(val binding: ItemRecyclerBinding) : RecyclerView.ViewHolder(binding.root) {
-        var mMemo:Memo? = null
+        var mRoomMemo:RoomMemo? = null
         init {
             binding.buttonDelete.setOnClickListener {
-                helper?.deleteMemo(mMemo!!)
-                listData.remove(mMemo)
+                helper?.roomMemoDao()?.delete(mRoomMemo!!)
+                listData.remove(mRoomMemo)
                 notifyDataSetChanged()
             }
         }
-        fun setMemo(memo:Memo) {
-            binding.textNo.text = "${memo.no}"
-            binding.textContent.text = memo.content
-            val sdf = SimpleDateFormat("yyyy/MM/dd hh:mm")
-            // 날짜 포맷은 SimpleDateFormat으로 설정합니다.
-            binding.textDatetime.text = "${sdf.format(memo.datetime)}"
-
-            this.mMemo = memo
+        fun setRoomMemo(memo:RoomMemo) {
+            with(binding) {
+                textNo.text = "${memo.no}"
+                textContent.text = memo.content
+                val sdf = SimpleDateFormat("yyyy/MM/dd hh:mm")
+                // 날짜 포맷은 SimpleDateFormat으로 설정합니다.
+                textDatetime.text = "${sdf.format(memo.datetime)}"
+            }
+            this.mRoomMemo = memo
         }
     }
 }

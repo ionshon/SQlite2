@@ -1,4 +1,4 @@
-package com.inu.sqlite2
+package com.inu.Room2
 
 import org.junit.Test
 

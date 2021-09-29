@@ -1,4 +1,4 @@
-package com.inu.sqlite2
+package com.inu.Room2
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

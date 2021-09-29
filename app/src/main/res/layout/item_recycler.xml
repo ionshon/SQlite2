@@ -32,9 +32,9 @@
         android:layout_marginBottom="32dp"
         android:ellipsize="end"
         android:gravity="center_vertical"
-        android:text="TextView"
+        android:text="TextView\nㅜㅜㅇㅇ"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonDelete"
         app:layout_constraintStart_toEndOf="@+id/textNo"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.35000002" />

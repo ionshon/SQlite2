@@ -1,2 +1,2 @@
-rootProject.name = "SQlite2"
+rootProject.name = "Room2"
 include ':app'
