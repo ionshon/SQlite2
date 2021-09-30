@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+// 메모 형식
 @Entity(tableName = "room_memo")
 class RoomMemo {
     @PrimaryKey(autoGenerate = true)

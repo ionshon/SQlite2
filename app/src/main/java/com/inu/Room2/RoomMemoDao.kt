@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 
+// 입출력 접근
 @Dao
 interface RoomMemoDao {
     @Query("select * from room_memo")
