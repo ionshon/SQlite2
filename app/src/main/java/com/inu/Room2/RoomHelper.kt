@@ -11,7 +11,7 @@ abstract class RoomHelper: RoomDatabase() {
     abstract fun roomMemoDao(): RoomMemoDao
 
     // 소스 : https://blog.yena.io/studynote/2018/09/08/Android-Kotlin-Room.html
-    companion object {
+ /*   companion object {
         private var DB: RoomHelper? = null
 
         fun getInstance(context: Context): RoomHelper? {
@@ -29,5 +29,5 @@ abstract class RoomHelper: RoomDatabase() {
         fun destroyInstance() {
             INSTANCE = null
         }
-    }
+    } */
 }
